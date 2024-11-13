@@ -1,0 +1,324 @@
+openapi: 3.0.0
+info:
+  title: PRACTICA 8
+  description: A simple API to get and create authors and posts
+  version: 1.0.0
+
+paths:
+  /api/authors:
+    get:
+      tags:
+        - Authors
+      summary: Get all the authors
+      description: This endpoint returns the list of authors
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    name:
+                      type: string
+                      example: Juan
+                    email:
+                      type: string
+                      example: juan@mail.com
+                    image:
+                      type: string
+                      example: image.png
+
+    post:
+      tags:
+        - Authors
+      summary: Add a new author
+      description: Add a new author
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                image:
+                  type: string
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  image:
+                    type: string
+
+        '400':
+          description: Invalid input
+        '409':
+          description: Conflict with the email
+
+  /api/authors/{authorId}:
+    get:
+      tags:
+        - Authors
+      summary: Get an author
+      description: This endpoint returns an specific author
+      parameters:
+        - name: authorId
+          in: path
+          description: ID of author
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  name:
+                    type: string
+                    example: Juan
+                  email:
+                    type: string
+                    example: juan@mail.com
+                  image:
+                    type: string
+                    example: image.png
+        '404':
+          description: Author not found.
+
+
+
+  /api/authors/{authorId}/posts:
+    get:
+      tags:
+        - Authors
+      summary: Get all author posts
+      description: This endpoint returns the list of posts of an author
+      parameters:
+        - name: authorId
+          in: path
+          description: ID of author
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    creation_date:
+                      type: string
+                    category:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: Juan
+                        email:
+                          type: string
+                          example: juan@mail.com
+                        image:
+                          type: string
+                          example: image.png
+
+  /api/posts:
+    get:
+      tags:
+        - Posts
+      summary: Get all the posts
+      description: Get all the posts
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    creation_date:
+                      type: string
+                    category:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: Juan
+                        email:
+                          type: string
+                          example: juan@mail.com
+                        image:
+                          type: string
+                          example: image.png
+
+    post:
+      tags:
+        - Posts
+      summary: Create a post
+      description: Create a post
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                creation_date:
+                  type: string
+                category:
+                  type: string
+                author_id:
+                  type: number
+        required: true
+      responses:
+        '201':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    creation_date:
+                      type: string
+                    category:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: Juan
+                        email:
+                          type: string
+                          example: juan@mail.com
+                        image:
+                          type: string
+                          example: image.png
+        '400':
+          description: Invalid input.
+
+  /api/posts/{postId}:
+    get:
+      tags:
+        - Posts
+      summary: Get an specific post
+      description: Get an specific post
+      parameters:
+        - name: postId
+          in: path
+          description: ID of post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    creation_date:
+                      type: string
+                    category:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          example: 1
+                        name:
+                          type: string
+                          example: Juan
+                        email:
+                          type: string
+                          example: juan@mail.com
+                        image:
+                          type: string
+                          example: image.png
+        '404':
+          description: Post not found.
